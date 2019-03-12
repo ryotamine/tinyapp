@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
+  // shortURL: longURL
 };
 
 app.get("/", (req, res) => {
@@ -29,6 +30,7 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
   res.render("urls_show", templateVars);
+  //console.log(generateRandomString());
 });
 
 app.get("/urls.json", (req, res) => {
@@ -40,8 +42,11 @@ app.get("/hello", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
+  var randomStr = generateRandomString();
   console.log(req.body);  // Log the POST request body to the console
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  //res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  res.redirect(`/urls/${randomStr}`);
+  // window.location.replace("/urls/:shortURL");
 });
 
 app.listen(PORT, () => {
@@ -58,5 +63,3 @@ function generateRandomString() {
 
   return text;
 }
-
-console.log(generateRandomString());
