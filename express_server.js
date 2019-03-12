@@ -49,5 +49,14 @@ app.listen(PORT, () => {
 });
 
 function generateRandomString() {
+  var text = "";
+  var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+  for (var i = 0; i < 6; i++) {
+    text += str.charAt(Math.floor(Math.random() * str.length));
+  }
+
+  return str;
 }
+
+console.log(generateRandomString());
