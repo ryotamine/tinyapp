@@ -56,7 +56,7 @@ function generateRandomString() {
     text += str.charAt(Math.floor(Math.random() * str.length));
   }
 
-  return str;
+  return text;
 }
 
 console.log(generateRandomString());
