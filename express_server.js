@@ -4,6 +4,7 @@ var PORT = 8080; // default port 8080
 
 app.set("view engine", "ejs");
 
+// URL database
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"

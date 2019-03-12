@@ -6,14 +6,12 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>TinyApp</title>
+  <title>URLS - TinyApp Example</title>
 </head>
 <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-    <h2>Loop</h2>
-
-    <ul>
-      <li><%= longURL %>: <%= shortURL %></li>
-    </ul>
+    <%- include partials/_header.ejs %>
+      <h3>TinyURL for <%= longURL %></h3>
+        <h5><%= shortURL %></h5>
 </body>
 </html>
