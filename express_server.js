@@ -49,6 +49,12 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${randomStr}`);
 });
 
+// POST updated long URL
+app.post("/urls/:shortURL", (req, res) => {
+  urlDatabase[req.params.shortURL] = req.body.longURL;
+  res.redirect("/urls");
+});
+
 // POST URL removal
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
