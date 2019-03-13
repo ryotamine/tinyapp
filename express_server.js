@@ -17,11 +17,13 @@ app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
+// add random short URL and its long URL to URL database
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
 });
 
+// GET long URL from user
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -39,6 +41,7 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+// POST random short URL to match user's long URL
 app.post("/urls", (req, res) => {
   var randomStr = generateRandomString();
   urlDatabase[randomStr] = req.body.longURL;
@@ -46,6 +49,7 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${randomStr}`);
 });
 
+// GET random short URL to open long URL
 app.get("/u/:shortURL", (req, res) => {
   const longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
@@ -55,6 +59,7 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
+// generate short URL string of 6 random alphanumeric characters
 function generateRandomString() {
   var text = "";
   var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
