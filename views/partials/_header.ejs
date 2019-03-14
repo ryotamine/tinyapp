@@ -1,2 +1,15 @@
 <!-- Header title in body -->
 <h1>TinyApp</h1>
+
+<% if (username) { %>
+  <form method="POST" action="/logout">
+    <h5>Logged In As: TinyApp User!</h5>
+    <button type="submit" class="btn btn-primary">Logout</button>
+  </form>
+<% } else { %>
+  <form method="POST" action="/login">
+    <h5>Username:</h5>
+    <input class="form-control" type="text" name="username" placeholder="<%= username %>" style="width: 300px; margin: 1em">
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+<% } %>
