@@ -6,12 +6,24 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>URLS - TinyApp Example</title>
+  <title>New URL - TinyApp Example</title>
 </head>
 <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
+    <a href="/urls/new">URLs</a>
+      <label>|</label>
+      <a href="/urls/new">Create New TinyURL</a>
     <%- include partials/_header.ejs %>
-      <h3>My URLs</h3>
+
+    <h3>Create TinyURL</h3>
+    <form class="form-inline" action="/urls" method="POST">
+      <div class="form-group mb-2">
+        <label for="longURL">Enter a URL:</label>
+        <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+      <!-- <h3>My URLs</h3>
 
       <ul>
         <% for (let url in urls) { %>
@@ -19,7 +31,7 @@
           <a href="/urls/<%= url %>">Edit</a>
           <form method="POST" action="/urls/<%= url %>/delete"><button type="submit">Delete</button></form>
         <% }; %>
-      </ul>
+      </ul> -->
 
 </body>
 </html>
