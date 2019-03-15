@@ -66,8 +66,7 @@ app.post("/register", (req, res) => {
   console.log(users);
 
   // Check for registration errors
-  // Check every email to see if the email from line 48 exists (loop); add at line 50
-  if (!email || !password) { // new users cannot be created
+  if (!email || !password) {
     res.status(400).send("Forbidden");
     return;
   } else {
@@ -85,7 +84,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const user = emailLookup(req.body.email);
   // Check for login errors
-  if (user === null || req.body.password !== user.password) { // password is not defined for existing users
+  if (user === null || req.body.password !== user.password) {
     res.status(403).send("Forbidden");
     return;
   } else {
@@ -149,12 +148,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
 });
-
-// POST username in cookies
-// app.post("/login", (req, res) => {
-//   res.cookie("user_id", req.body.username);
-//   res.redirect("/urls/new");
-// });
 
 // POST logout and remove cookies
 app.post("/logout", (req, res) => {
