@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const PORT = 8080; // default port 8080
@@ -12,16 +13,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // User database
 const users = {
-  "userRandomID": {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur"
-  },
- "user2RandomID": {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk"
-  }
+//  "userRandomID": {
+//    id: "userRandomID",
+//    email: "user@example.com",
+//    password: "purple-monkey-dinosaur"
+//  },
+// "user2RandomID": {
+//    id: "user2RandomID",
+//    email: "user2@example.com",
+//    password: "dishwasher-funk"
+//  }
 }
 
 // URL database
@@ -46,6 +47,7 @@ app.post("/register", (req, res) => {
   const id = generateRandomString();
   const email = req.body.email;
   const password = req.body.password;
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
   // Check if email already exists
   for (let userId in users) {
@@ -58,7 +60,7 @@ app.post("/register", (req, res) => {
   users[id] = {
     id,
     email,
-    password
+    hashedPassword
   }
 
   // Test for cookie after registration
@@ -86,16 +88,21 @@ app.get("/login", (req, res) => {
 // POST login form
 app.post("/login", (req, res) => {
   const user = emailLookup(req.body.email);
-
-  // Check for login errors
-  if (user === null || req.body.password !== user.password) {
-    res.status(403).send("Forbidden");
-    return;
-  } else {
-    // Add cookie if valid login
-    res.cookie("user_id", user.id);
-    res.redirect("/urls");
+    // Check for login errors
+    if (user === null) {
+      res.status(403).send("Forbidden");
+      return;
+    } else {
+      // Compare password to hashed version
+      if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
+        // Add cookie if valid login
+        res.cookie("user_id", user.id);
+        res.redirect("/urls");
+      } else {
+        res.status(403).send("Forbidden");
+      }
   }
+
 });
 
 // Add random short URL and its long URL to URL database
@@ -129,7 +136,7 @@ app.get("/urls/:shortURL", (req, res) => {
 
 // Get JSON
 app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
+  res.json(users);
 });
 
 // Get hello world
