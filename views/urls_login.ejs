@@ -12,6 +12,7 @@
 
   <body style="font-size:20px; padding:50px;">
 
+    <h1>TinyApp</h1>
     <% include partials/_header %>
 
     <h3>Login</h3>
@@ -30,6 +31,12 @@
         </div>
       </div>
     </form>
+
+    <ul>
+      <% for (let url in urls) { %>
+        <li><%= url %>: <%= urls[url].longURL %></li>
+      <% }; %>
+    </ul>
 
   </body>
 </html>

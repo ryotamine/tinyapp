@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>New URL - TinyApp Example</title>
-</head>
-<body style="font-size:20px; padding:50px;">
-    <!-- Add EJS code here -->
-    <a href="/urls/new">URLs</a>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>New URL - TinyApp Example</title>
+  </head>
+
+  <body style="font-size:20px; padding:50px;">
+
+    <h1>TinyApp</h1>
+      <a href="/urls">URLs</a>
       <label>|</label>
       <a href="/urls/new">Create New TinyURL</a>
-    <%- include partials/_header.ejs %>
+      <%- include partials/_header.ejs %>
 
     <h3>Create TinyURL</h3>
     <form class="form-inline" action="/urls" method="POST">
@@ -23,15 +26,15 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
-      <!-- <h3>My URLs</h3>
 
-      <ul>
-        <% for (let url in urls) { %>
-          <li><%= url %>: <%= urls[url] %></li>
-          <a href="/urls/<%= url %>">Edit</a>
-          <form method="POST" action="/urls/<%= url %>/delete"><button type="submit">Delete</button></form>
-        <% }; %>
-      </ul> -->
+    <h3>My URLs</h3>
+    <ul>
+      <% for (let url in urls) { %>
+        <li><%= url %>: <%= urls[url].longURL %></li>
+        <a href="/urls/<%= url %>">Edit</a>
+        <form method="POST" action="/urls/<%= url %>/delete"><button type="submit">Delete</button></form>
+      <% }; %>
+    </ul>
 
-</body>
+  </body>
 </html>
