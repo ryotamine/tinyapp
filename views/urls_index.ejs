@@ -11,12 +11,11 @@
   </head>
 
   <body style="font-size:20px; padding:50px;">
-
     <h1>TinyApp</h1>
-      <a href="/urls">URLs</a>
-      <label>|</label>
-      <a href="/urls/new">Create New TinyURL</a>
-      <%- include partials/_header.ejs %>
+    <a href="/urls">URLs</a>
+    <label>|</label>
+    <a href="/urls/new">Create New TinyURL</a>
+    <%- include partials/_header.ejs %>
 
     <h3>Create TinyURL</h3>
     <form class="form-inline" action="/urls" method="POST">
@@ -35,6 +34,5 @@
         <form method="POST" action="/urls/<%= url %>/delete"><button type="submit">Delete</button></form>
       <% }; %>
     </ul>
-
   </body>
 </html>

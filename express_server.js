@@ -3,38 +3,23 @@ const cookieSession = require("cookie-session");
 const bcrypt = require("bcrypt");
 
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 8080;
 
 app.use(cookieSession({
-  name: 'session',
-  keys: ['secretkey']
-
+  name: "session",
+  keys: ["tinyapp"]
 }));
 
 app.set("view engine", "ejs");
 
 const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // User database
-const users = {
-//  "userRandomID": {
-//    id: "userRandomID",
-//    email: "user@example.com",
-//    password: "purple-monkey-dinosaur"
-//  },
-// "user2RandomID": {
-//    id: "user2RandomID",
-//    email: "user2@example.com",
-//    password: "dishwasher-funk"
-//  }
-}
+const users = {};
 
 // URL database
-const urlDatabase = {
-  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
-  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
-};
+const urlDatabase = {};
 
 // GET hello
 app.get("/", (req, res) => {
@@ -57,7 +42,7 @@ app.post("/register", (req, res) => {
   // Check if email already exists
   for (let userId in users) {
     if (email === users[userId].email) {
-      res.status(400).send("Forbidden");
+      res.status(400).send("Invalid. Please try again.");
     }
   }
 
@@ -66,7 +51,7 @@ app.post("/register", (req, res) => {
     id,
     email,
     hashedPassword
-  }
+  };
 
   // Test for cookie after registration
   req.session.user_id = id;
@@ -74,7 +59,7 @@ app.post("/register", (req, res) => {
 
   // Check for registration errors
   if (!email || !password) {
-    res.status(400).send("Forbidden");
+    res.status(400).send("Invalid. Please try again.");
     return;
   } else {
     res.redirect("/urls");
@@ -96,7 +81,7 @@ app.post("/login", (req, res) => {
 
   // Check for login errors
   if (user === null) {
-    res.status(403).send("Forbidden");
+    res.status(403).send("Invalid. Please try again.");
     return;
   } else {
     // Compare password to hashed version
@@ -105,10 +90,9 @@ app.post("/login", (req, res) => {
       req.session.user_id = user.id;
       res.redirect("/urls");
     } else {
-      res.status(403).send("Forbidden");
+      res.status(403).send("Invalid. Please try again.");
     }
   }
-
 });
 
 // Add random short URL and its long URL to URL database
@@ -140,12 +124,12 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-// Get JSON
+// GET JSON
 app.get("/urls.json", (req, res) => {
   res.json(users);
 });
 
-// Get hello world
+// GET hello world
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
@@ -223,7 +207,7 @@ function emailLookup(email) {
 
 // User lookup helper function
 function urlsForUser(id) {
-  let urls = { };
+  let urls = {};
   for (let key in urlDatabase) {
     if (urlDatabase[key].userID === id) {
       urls[key] = urlDatabase[key];
