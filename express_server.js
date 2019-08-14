@@ -1,8 +1,8 @@
-const express = require("express");
+const express       = require("express");
 const cookieSession = require("cookie-session");
-const bcrypt = require("bcrypt");
+const bcrypt        = require("bcrypt");
 
-const app = express();
+const app  = express();
 const PORT = 8080;
 
 app.use(cookieSession({
@@ -20,6 +20,37 @@ const users = {};
 
 // URL database
 const urlDatabase = {};
+
+// Generate string of 6 random alphanumeric characters
+function generateRandomString() {
+  let text = "";
+  let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 6; i++) {
+    text += str.charAt(Math.floor(Math.random() * str.length));
+  }
+  return text;
+}
+
+// Email lookup helper function
+function emailLookup(email) {
+  for (let id in users) {
+    if (users[id].email === email) {
+      return users[id];
+    }
+  }
+  return null;
+}
+
+// User lookup helper function
+function urlsForUser(id) {
+  let urls = {};
+  for (let key in urlDatabase) {
+    if (urlDatabase[key].userID === id) {
+      urls[key] = urlDatabase[key];
+    }
+  }
+  return urls;
+}
 
 // GET hello
 app.get("/", (req, res) => {
@@ -53,9 +84,8 @@ app.post("/register", (req, res) => {
     hashedPassword
   };
 
-  // Test for cookie after registration
+  // Add cookie after registration
   req.session.user_id = id;
-  console.log(users);
 
   // Check for registration errors
   if (!email || !password) {
@@ -184,34 +214,3 @@ app.get("/u/:shortURL", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-
-// Generate string of 6 random alphanumeric characters
-function generateRandomString() {
-  let text = "";
-  let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < 6; i++) {
-    text += str.charAt(Math.floor(Math.random() * str.length));
-  }
-  return text;
-}
-
-// Email lookup helper function
-function emailLookup(email) {
-  for (let id in users) {
-    if (users[id].email === email) {
-      return users[id];
-    }
-  }
-  return null;
-}
-
-// User lookup helper function
-function urlsForUser(id) {
-  let urls = {};
-  for (let key in urlDatabase) {
-    if (urlDatabase[key].userID === id) {
-      urls[key] = urlDatabase[key];
-    }
-  }
-  return urls;
-}
